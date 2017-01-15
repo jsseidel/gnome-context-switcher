@@ -28,8 +28,8 @@ To switch contexts, use `contextswitch foo` where foo is an existing context. If
 
 Contextswitch calls 2 scripts when it tries to load a context.
 
-1. `~/.config/contextswitch/%lt;CURRENT context&gt;/contextswitch.sh unload`
-2. `~/.config/contextswitch/%lt;NEW context&gt;/contextswitch.sh load`
+1. `~/.config/contextswitch/<CURRENT context>/contextswitch.sh unload`
+2. `~/.config/contextswitch/<NEW context>/contextswitch.sh load`
 
 You can use 1 or both scripts to perform initialization or shutdown tasks. For example, you could save the contents of the current context's ~/Desktop directory to ~/.Desktop.somecontextname during the unloading phase and then copy ~/.Desktop.someothercontextname to ~/Desktop during the load phase.
 
