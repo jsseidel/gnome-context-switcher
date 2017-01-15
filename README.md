@@ -31,9 +31,28 @@ Contextswitch calls 2 scripts when it tries to load a context.
 1. `~/.config/contextswitch/<CURRENT context>/contextswitch.sh unload`
 2. `~/.config/contextswitch/<NEW context>/contextswitch.sh load`
 
-You can use 1 or both scripts to perform initialization or shutdown tasks. For example, you could save the contents of the current context's ~/Desktop directory to ~/.Desktop.somecontextname during the unloading phase and then copy ~/.Desktop.someothercontextname to ~/Desktop during the load phase.
+You can use 1 or both scripts to perform initialization or shutdown tasks.
 
-Or, you could, for example, start or stop a VPN during the right phase.
+#### Examples
 
-It's up to you.
+##### Saving desktop files
+
+Save the contents of the current context's ~/Desktop directory to ~/.Desktop.somecontextname during the unloading phase and then copy ~/.Desktop.someothercontextname to ~/Desktop during the load phase.
+
+##### Starting/Stopping a VPN
+
+Start or stop a VPN during the load or unload phase.
+
+##### Git identities
+
+Here's one to set a git identity:
+
+```
+#!/bin/bash
+
+if [[ "$1" == "load" ]] ; then
+	git config --global user.name "Lastname, Firstname (foobar)"
+	git config --global user.email "foobar@somecompany.com"
+fi
+```
 
