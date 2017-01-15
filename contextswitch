@@ -1,0 +1,135 @@
+#!/bin/bash
+
+MODE=macos
+#MODE=unity
+
+####################################################################
+# GLOBALS
+CSDIR=~/.config/contextswitch
+
+function context_exists() {
+	[[ -d ~/.contextswitch/$1 ]]
+}
+
+####################################################################
+# FUNCTIONS 
+
+# Display a usage message
+function usage {
+	echo "Usage: contextswitch [contextname]"
+	echo "    If no context by the name given exists, contextswitch will create a"
+	echo "    new context by the given name."
+	echo
+	echo "    If no argument is given, contextswitch will simply output the name"
+	echo "    of the current context, if any exists."
+}
+
+# Return true or false confirmation where NO is the default
+# response
+function confirm () {
+	# call with a prompt string or use a default
+  read -r -p "${1:-Are you sure? [y/N]} " response
+  case $response in
+   [yY][eE][sS]|[yY]) 
+    true
+    ;;
+   *)
+   	false
+    ;;
+  esac
+}
+
+# Save a context
+function save_context_unity () {
+	mkdir -p $CSDIR/$1
+	gsettings get com.canonical.Unity.Launcher favorites > $CSDIR/$1/launcher
+	gsettings get org.gnome.desktop.background picture-uri > $CSDIR/$1/desktopbackground
+	echo "Saved context '$1'"
+}
+
+# Switch to a different context
+function switch_context_unity () {
+	gsettings set org.gnome.desktop.background picture-uri `cat $CSDIR/$1/desktopbackground`
+	FAV=`cat $CSDIR/$1/launcher`
+	gsettings set com.canonical.Unity.Launcher favorites "$FAV"
+		
+	echo "Switched to context '$1'"
+}
+
+# Save a context
+function save_context_macos () {
+	mkdir -p $CSDIR/$1
+	cp ~/Library/Preferences/com.apple.dock.plist $CSDIR/$1/com.apple.dock.plist
+ 	osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)' > $CSDIR/$1/desktopbackground
+	echo "Saved context '$1'"
+}
+
+# Switch to a different context
+function switch_context_macos () {
+	DTBAK=`cat $CSDIR/$1/desktopbackground`
+	osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$DTBAK\""
+	cp $CSDIR/$1/com.apple.dock.plist ~/Library/Preferences/com.apple.dock.plist
+	killall Dock
+		
+	echo "Switched to context '$1'"
+}
+
+# END FUNCTIONS 
+####################################################################
+
+####################################################################
+# THE MAIN ATTRACTION
+
+# Set up config directory if not found
+if [[ ! -d "$CSDIR" ]] ; then
+	mkdir -p "$CSDIR"
+fi
+
+# Get current context if any
+CURRCONTEXT=""
+if [[ -r ~/.contextswitch ]] ; then
+	CURRCONTEXT=`cat ~/.contextswitch`
+fi
+
+# Get the context name
+WANTCONTEXT=$1
+if [[ "$WANTCONTEXT" == "-?" || "$WANTCONTEXT" == "help" ]] ; then
+	usage
+	exit 1
+elif [[ "$WANTCONTEXT" == "" ]] ; then
+	if [[ "$CURRCONTEXT" != "" ]] ; then
+		echo "Current context is '$CURRCONTEXT'"	
+	else
+		echo "No context loaded"
+	fi
+elif [[ ! -d $CSDIR/$WANTCONTEXT ]] ; then
+	if confirm "Context $WANTCONTEXT doesn't exist. Save current context as $1? [y/N]" ; then
+		save_context_${MODE} "$WANTCONTEXT"
+		echo $1 > ~/.contextswitch	
+	else
+		echo "Okay. Nevermind."
+	fi
+else
+	# Only save if our wantcontext is the same as our current context
+	if [[ "$CURRCONTEXT" == "$WANTCONTEXT" ]] ; then
+		save_context_${MODE} "$CURRCONTEXT"
+	# Otherwise, we'll switch.	
+	else
+		# Call a custom contextswitch.sh for unloading for the current
+		# context if it exists
+		if [[ -r $CSDIR/$CURRCONTEXT/contextswitch.sh ]] ; then
+			bash $CSDIR/$CURRCONTEXT/contextswitch.sh unload
+		fi	
+		
+		# Call a custom contextswitch.sh for loading for the desired 
+		# context if it exists
+		if [[ -r $CSDIR/$WANTCONTEXT/contextswitch.sh ]] ; then
+			bash $CSDIR/$WANTCONTEXT/contextswitch.sh load
+		fi	
+
+		switch_context_${MODE} "$WANTCONTEXT"
+	fi
+	
+	echo $1 > ~/.contextswitch	
+fi
+
