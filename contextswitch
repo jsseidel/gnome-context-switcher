@@ -7,10 +7,6 @@ MODE=macos
 # GLOBALS
 CSDIR=~/.config/contextswitch
 
-function context_exists() {
-	[[ -d ~/.contextswitch/$1 ]]
-}
-
 ####################################################################
 # FUNCTIONS 
 
@@ -37,6 +33,11 @@ function confirm () {
    	false
     ;;
   esac
+}
+
+# Does a given context exist?
+function context_exists() {
+	[[ -d $CSDIR/$1 ]]
 }
 
 # Save a context
