@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #MODE=macos
-MODE=gnome
+#MODE=gnome
+MODE=unity
 
 ####################################################################
 # GLOBALS
@@ -38,6 +39,28 @@ function confirm () {
 # Does a given context exist?
 function context_exists() {
 	[[ -d $CSDIR/$1 ]]
+}
+
+# Save a context
+function save_context_unity () {
+	mkdir -p $CSDIR/$1
+	gsettings get com.canonical.Unity.Launcher favorites > $CSDIR/$1/launcher
+	gsettings get org.gnome.desktop.background picture-uri > $CSDIR/$1/desktopbackground
+	echo "Saved context '$1'"
+}
+
+# Switch to a different context
+function switch_context_unity () {
+	gsettings set org.gnome.desktop.background picture-uri `cat $CSDIR/$1/desktopbackground`
+	FAV=`cat $CSDIR/$1/launcher`
+	gsettings set com.canonical.Unity.Launcher favorites "$FAV"
+
+	echo "Rebooting nautilus . . ."
+	killall nautilus
+	sleep 2
+	nautilus --new-window 1>/dev/null 2>&1 &
+
+	echo "Switched to context '$1'"
 }
 
 # Save a context
