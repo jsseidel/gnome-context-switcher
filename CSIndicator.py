@@ -6,7 +6,7 @@
 # TODO:
 #   + Make AppIndicator3 menu dynamic:
 #       https://askubuntu.com/questions/751608/how-can-i-write-a-dynamically-updated-panel-app-indicator
-#   + Convert contextswitch.sh Bash script to python
+#   + Convert contextswitch.sh Bash script to Python
 #   + Add ability to create new contexts in the AppIndicator3 menu
 #   + Add ability to delete contexts in the AppIndicator3 menu
 #############################################################################
