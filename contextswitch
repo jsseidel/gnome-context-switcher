@@ -132,12 +132,12 @@ elif [[ "$WANTCONTEXT" == "" ]] ; then
 		echo "No context loaded"
 	fi
 elif [[ ! -d $CSDIR/$WANTCONTEXT ]] ; then
-	if confirm "Context $WANTCONTEXT doesn't exist. Save current context as $1? [y/N]" ; then
+	#if confirm "Context $WANTCONTEXT doesn't exist. Save current context as $1? [y/N]" ; then
 		save_context_${MODE} "$WANTCONTEXT"
 		echo $1 > ~/.contextswitch	
-	else
-		echo "Okay. Nevermind."
-	fi
+	#else
+	#	echo "Okay. Nevermind."
+	#fi
 else
 	# Only save if our wantcontext is the same as our current context
 	if [[ "$CURRCONTEXT" == "$WANTCONTEXT" ]] ; then
