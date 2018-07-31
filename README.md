@@ -1,6 +1,6 @@
 # ContextSwitch
 
-Contextswitch is an effective but poor excuse for KDE's Activities feature that works in both Unity (as of 16.10) and macOS (as of Sierra).
+Contextswitch is an effective but poor excuse for KDE's Activities feature that works in both Unity (as of 16.04 LTS), Gnome on Ubuntu (as of 18.04 LTS), and macOS (as of Sierra).
 
 Contextswitch is a simple BASH script that saves and restores working "contexts" so that you don't have to create multiple users in order to change desktop backgrounds, change Dock/Launcher applications, etc.
 
