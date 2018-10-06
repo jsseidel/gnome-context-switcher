@@ -56,3 +56,19 @@ if [[ "$1" == "load" ]] ; then
 fi
 ```
 
+### Experimental
+
+`CSIndicator.py` is an experimental work-in-progress Python3 script you can use to provide some rudimentary GUI support for Gnome in Ubuntu 18.04 (may work in other distros). To use it:
+
+```bash
+sudo apt install -y python3-gi libappindicator3-dev
+```
+
+Then, you can launch it with:
+
+```bash
+CSIndicator.py ~/git/contextswitch/contextswitch
+```
+
+A desktop file is included to alter and use.
+
