@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Name=Context Switcher
-Icon=/home/spence/PersonalWorkspace/git/contextswitch/csindicator.png
-Exec=/home/spence/PersonalWorkspace/git/contextswitch/CSIndicator.py /home/spence/PersonalWorkspace/git/contextswitch/contextswitch

@@ -58,7 +58,7 @@ fi
 
 ### Experimental
 
-`CSIndicator.py` is an experimental work-in-progress Python3 script you can use to provide some rudimentary GUI support for Gnome in Ubuntu 18.04 (may work in other distros). To use it:
+`ContextSwitcherGnome.py` is an beta Python3 script indicator GUI app for Gnome in Ubuntu 18.04 (may work in other distros). To use it:
 
 ```bash
 sudo apt install -y python3-gi libappindicator3-dev
@@ -67,7 +67,7 @@ sudo apt install -y python3-gi libappindicator3-dev
 Then, you can launch it with:
 
 ```bash
-CSIndicator.py ~/git/contextswitch/contextswitch
+ContextSwitcherGnome.py
 ```
 
 A desktop file is included to alter and use.
