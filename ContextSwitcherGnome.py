@@ -96,6 +96,10 @@ class CSIndicator():
         """
         menu = Gtk.Menu()
 
+        # Create the config directory if it's not there
+        if os.path.isdir(self.config_dir) == False:
+            os.mkdir(self.config_dir)
+
         for dir in sorted(os.listdir(self.config_dir)):
             if dir != "." and dir != "..":
                 item = Gtk.MenuItem(dir)
