@@ -26,7 +26,7 @@ CONTEXT=PersonalWorkspace
 
 if [[ "$1" == "load" ]] ; then
     ln -s ~/$CONTEXT/git ~/git
-    ln -s ~/$CONTENT/Documents ~/Documents
+    ln -s ~/$CONTEXT/Documents ~/Documents
     ln -s ~/$CONTEXT/Pictures ~/Pictures
     # This is needed because nautilus will create a Desktop
     # directory if there isn't one, and if we don't remove
