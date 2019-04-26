@@ -221,11 +221,6 @@ class CSIndicator():
         if stderr != "":
             err_msg = "%s\n\n%s" % (err_msg, stderr)
 
-        # Restart nautilus
-        self.run_command("killall nautilus-desktop")
-        time.sleep(2)
-        Popen(["nohup", "nautilus-desktop", "--new-window"])
-
         self.curr_context = context
         self.record_curr_context()
 
