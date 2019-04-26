@@ -88,7 +88,6 @@ class CSIndicator():
         """
         context_file = os.path.expanduser("~/.contextswitch")
 
-        print("Recording context to: %s -> %s\n" %(self.curr_context, context_file))
         self.string_to_file(self.curr_context, context_file)
 
     def create_menu(self):
