@@ -24,6 +24,8 @@ sudo apt install ./gnome-context-switcher_1.0.0_amd64.deb
 
 ## Use
 
+### Create a new context
+
 Set up your Desktop just the way you like for a particular context. Change the
 background, set up an optimal set of applications on the Dock.
 
@@ -32,8 +34,19 @@ context and click the "OK" button. That's it!
 
 Repeat the process to create as many contexts as you need.
 
+### Delete a context
+
 To delete a context, click the indicator icon and select "Delete . . .".
 Confirm by clicking "Yes."
+
+### Switch contexts
+
+To switch a context, simply select it from the indicator menu.
+
+### Save changes to the current context
+
+After making changes to the current context, save it by selecting it from the
+indicator menu.
 
 ### Running custom scripts
 
