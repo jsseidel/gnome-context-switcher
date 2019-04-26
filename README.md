@@ -1,13 +1,13 @@
 # Gnome Context Switcher
 
 Gnome Context Switcher is an effective but poor excuse for KDE's Activities
-feature for Gnome.  It has the added benefit of allowing you to change
-workflows without losing your Cisco AnyConnect VPN because you're not changing
-users.
+feature for Gnome. Changing contexts allows you to change desktop workflows
+without changing users, which can be problematic, resulting in multple setups
+for some applications and possible VPN issues.
 
 Unlike switching between multiple desktops, Gnome Context Switcher allows you
 to change Dock applications and have custom desktop backgrounds for each
-context.
+context. 
 
 ## Features
 
