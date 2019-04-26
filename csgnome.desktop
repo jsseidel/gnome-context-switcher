@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Name=Gnome Context Switcher
-Icon=/home/spence/PersonalWorkspace/git/contextswitch/csgnome.png
-Exec=/home/spence/PersonalWorkspace/git/contextswitch/ContextSwitcherGnome.py

@@ -1,0 +1,18 @@
+Source: gnome-context-switcher
+Section: text
+Priority: optional
+Maintainer: Joseph Spencer Seidel <jsseidel@fastmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.1.2
+Homepage: https://github.com/jsseidel/contextswitch
+
+Package: gnome-context-switcher
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-gi, libappindicator3-dev, gir1.2-notify-0.7, libnotify-bin, libnotify4
+Description: Gnome Context Switcher is an approximation of KDE Activities.
+	Gnome Context Switcher is an approximation of KDE Activities. You can:
+	- Create an unlimited number of desktop contexts (e.g. work, personal, writing, developing)
+	- Customize the icons on the dock as well as your desktop background for each context
+	- Run an optional "load" and "unload" script to do things like
+	  create and remove symlinks or directories so that your context's
+	  directories are where you thinkg they should be.	
