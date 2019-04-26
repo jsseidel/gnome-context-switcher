@@ -1,12 +1,13 @@
-# ContextSwitch
+# Gnome Context Switcher
 
-Contextswitch is an effective but poor excuse for KDE's Activities feature that works in both Unity (as of 16.04 LTS), Gnome on Ubuntu (as of 18.04 LTS), and macOS (as of Sierra).
+Gnome Context Switcher is an effective but poor excuse for KDE's Activities
+feature for Gnome.  It has the added benefit of allowing you to change
+workflows without losing your Cisco AnyConnect VPN because you're not changing
+users.
 
-Contextswitch is a simple BASH script that saves and restores working "contexts" so that you don't have to create multiple users in order to change desktop backgrounds, change Dock/Launcher applications, etc.
-
-It has the added benefit of allowing you to change workflows without losing your Cisco AnyConnect VPN because you're not changing users.
-
-Unlike switching between multiple desktops, contextswitch allows you to change Dock/Launcher applications and have custom desktop backgrounds for each context (yes, the latter feature does exist in macOS and with some doing in Unity).
+Unlike switching between multiple desktops, Gnome Context Switcher allows you
+to change Dock applications and have custom desktop backgrounds for each
+context.
 
 ## Features
 
@@ -14,15 +15,26 @@ Unlike switching between multiple desktops, contextswitch allows you to change D
 + Saves Dock/Launcher settings and Desktop backgrounds by default
 + Can run custom script during loading/unloading of a context
 
-## How to use it
+## Install
 
-First, clone the repository and put the script somewhere sane (e.g. ~/bin).
+Download [the latest release](https://github.com/jsseidel/gnome-context-switcher/releases).
 
-Now, set up your Desktop just the way you like for a particular context. Change the background, set up an optimal set of applications on the Dock or Launcher.
+```bash
+sudo apt install ./gnome-context-switcher_1.0.0_amd64.deb
+```
 
-Now, do `contextswitch work`, where `work` is the name of the context you're saving. Create as many as you need. If the context doesn't exist, `contextswitch` will create it for you.
+## Use
 
-To switch contexts, use `contextswitch foo` where foo is an existing context. If `foo` is already loaded, contextswitch will save the current state as `foo`.
+Set up your Desktop just the way you like for a particular context. Change the
+background, set up an optimal set of applications on the Dock.
+
+Next, click the indicator icon and select "New . . .". Choose a name for your
+context and click the "OK" button. That's it!
+
+Repeat the process to create as many contexts as you need.
+
+To delete a context, click the indicator icon and select "Delete . . .".
+Confirm by clicking "Yes."
 
 ### Running custom scripts
 
@@ -37,7 +49,9 @@ You can use 1 or both scripts to perform initialization or shutdown tasks.
 
 ##### Saving desktop files
 
-Save the contents of the current context's ~/Desktop directory to ~/.Desktop.somecontextname during the unloading phase and then copy ~/.Desktop.someothercontextname to ~/Desktop during the load phase.
+Save the contents of the current context's ~/Desktop directory to
+~/.Desktop.somecontextname during the unloading phase and then copy
+~/.Desktop.someothercontextname to ~/Desktop during the load phase.
 
 ##### Starting/Stopping a VPN
 
@@ -55,20 +69,4 @@ if [[ "$1" == "load" ]] ; then
 	git config --global user.email "foobar@somecompany.com"
 fi
 ```
-
-### Experimental
-
-`ContextSwitcherGnome.py` is an beta Python3 script indicator GUI app for Gnome in Ubuntu 18.04 (may work in other distros). To use it:
-
-```bash
-sudo apt install -y python3-gi libappindicator3-dev
-```
-
-Then, you can launch it with:
-
-```bash
-ContextSwitcherGnome.py
-```
-
-A desktop file is included to alter and use.
 
