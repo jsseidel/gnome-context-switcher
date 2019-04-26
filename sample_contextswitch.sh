@@ -29,25 +29,25 @@
 CONTEXT=PersonalWorkspace
 
 if [[ "$1" == "load" ]] ; then
-	ln -s ~/$CONTEXT/git ~/git
-	ln -s ~/Dropbox/Documents ~/Documents
-	ln -s ~/$CONTEXT/Pictures ~/Pictures
-	ln -s ~/$CONTEXT/Desktop ~/Desktop
-	ln -s ~/$CONTEXT/Music ~/Music
-	ln -s ~/$CONTEXT/Videos ~/Videos
+  ln -s ~/$CONTEXT/git ~/git
+  ln -s ~/Dropbox/Documents ~/Documents
+  ln -s ~/$CONTEXT/Pictures ~/Pictures
+  ln -s ~/$CONTEXT/Desktop ~/Desktop
+  ln -s ~/$CONTEXT/Music ~/Music
+  ln -s ~/$CONTEXT/Videos ~/Videos
+  # We restart nautilus-desktop here because we switched backgrounds and
+  # Desktop directories
+  killall nautilus-desktop
+  sleep 1
+  nohup nautilus-desktop --new-window </dev/null 1>/dev/null 2>&1 &
 elif [[ "$1" == "unload" ]] ; then
-	rm -f ~/git
-	rm -f ~/Documents
-	rm -f ~/Pictures
-	rm -f ~/Desktop
-	rm -f ~/Music
-	rm -f ~/Videos
+  rm -f ~/git
+  rm -f ~/Documents
+  rm -f ~/Pictures
+  rm -f ~/Desktop
+  rm -f ~/Music
+  rm -f ~/Videos
 fi
 
-# We kill nautilus-desktop here because we switched backgrounds
-# and Desktop directories
-killall nautilus-desktop
-sleep 2
-nohup nautilus-desktop --new-window </dev/null 1>/dev/null 2>&1 &
 
 
