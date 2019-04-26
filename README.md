@@ -16,6 +16,16 @@ context.
 
 ## Install
 
+### PPA
+
+```bash
+sudo add-apt-repository ppa:jsseidel/gnome-context-switcher
+sudo apt update
+sudo apt install gnome-context-switcher
+```
+
+### Deb package
+
 Download [the latest release](https://github.com/jsseidel/gnome-context-switcher/releases).
 
 ```bash

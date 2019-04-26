@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Name=Gnome Context Switcher
-Icon=/opt/gnome-context-switcher/gnome-context-switcher.png
-Exec=/opt/gnome-context-switcher/gnome-context-switcher.py

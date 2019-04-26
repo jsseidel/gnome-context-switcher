@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Joseph Spencer Seidel <jsseidel@fastmail.com>
 Build-Depends: debhelper (>= 10)
 Standards-Version: 4.1.2
-Homepage: https://github.com/jsseidel/contextswitch
+Homepage: https://github.com/jsseidel/gnome-context-switcher
 
 Package: gnome-context-switcher
 Architecture: any
