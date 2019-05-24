@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-##############################################################################
-# This is currently beta. Use at your own risk!
-##############################################################################
-
 import json
 import os
 import signal
@@ -69,6 +65,9 @@ class CSIndicator():
                 AppIndicator3.IndicatorCategory.OTHER)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.create_menu())
+
+        # This may end up being too simplistic to deal with cinnamon
+        self.is_cinnamon = os.path.isdir(os.path.expanduser("~/.cinnamon"))
 
         Notify.init(APPINDICATOR_ID)
 
@@ -161,7 +160,10 @@ class CSIndicator():
                     self.show_message("%s\n\n%s" % (stdout, stderr))
 
             # Now we can save the new context
-            self.save_context(new_dialog.get_text())
+            if (self.is_cinnamon):
+                self.save_context_cinnamon(new_dialog.get_text())
+            else:
+                self.save_context_gnome(new_dialog.get_text())
             self.indicator.set_menu(self.create_menu())
             self.curr_context = new_dialog.get_text()
             self.record_curr_context()
@@ -196,11 +198,18 @@ class CSIndicator():
                     self.show_message("%s\n\n%s" % (stdout, stderr))
 
             # Now it's safe to switch contexts
-            self.switch_context(context)
+            if (self.is_cinnamon):
+                self.switch_context_cinnamon(context)
+            else:
+                self.switch_context_gnome(context)
         else:
-            self.save_context(context)
+            if (self.is_cinnamon):
+                self.save_context_cinnamon(context)
+            else:
+                self.save_context_gnome(context)
 
-    def switch_context(self, context):
+    # GNOME stuff
+    def switch_context_gnome(self, context):
         err_msg = ""
 
         # Change desktop background
@@ -229,7 +238,7 @@ class CSIndicator():
         else:
             self.show_message("Switched to context '%s'." % context)
 
-    def save_context(self, context):
+    def save_context_gnome(self, context):
         err_msg = ""
 
         # Make a directory for the context in case one does not yet exist
@@ -250,6 +259,71 @@ class CSIndicator():
         # Save the background picture
         (stdout, stderr) = self.run_command(
                 "gsettings get org.gnome.desktop.background picture-uri")
+        if stderr != "":
+            err_msg = "%s\n\n%s" % (err_msg, stderr)
+        else:
+            conf_path = "%s/%s/desktopbackground" % (self.config_dir, context)
+            self.string_to_file(stdout, conf_path)
+
+        # Show a status message
+        if err_msg != "":
+            self.show_message(
+                    "Problems were encountered while trying to save context"
+                    "'%s':\n\n%s" % (context, err_msg))
+        else:
+            self.show_message("Saved context '%s'" % context)
+
+    # CINNAMON stuff
+    def switch_context_cinnamon(self, context):
+        err_msg = ""
+
+        # Change desktop background
+        background = self.get_file_contents("%s/%s/desktopbackground" %
+                (self.config_dir, context))
+        (stdout, stderr) = self.run_command(
+                "gsettings set org.cinnamon.desktop.background picture-uri %s" %
+                background)
+        if stderr != "":
+            err_msg = stderr
+
+        # Replace current .cinnamon with the new one
+        (stdout, stderr) = self.run_command("rm -rf %s" %
+                os.path.expanduser("~/.cinnamon/configs/grouped-window-list@cinnamon.org"))
+        if stderr != "":
+            err_msg = "%s\n\n%s" % (err_msg, stderr)
+        (stdout, stderr) = self.run_command(
+                "cp -r %s/%s/grouped-window-list@cinnamon.org/ %s/.cinnamon/configs/." %
+                (self.config_dir, context, os.path.expanduser("~/.")))
+        if stderr != "":
+            err_msg = "\n%s\n\n%s" % (err_msg, stderr)
+
+        self.curr_context = context
+        self.record_curr_context()
+
+        if err_msg != "":
+            self.show_message("There was a problem:\n\n%s" % err_msg)
+        else:
+            self.show_message("Switched to context '%s'." % context)
+
+    def save_context_cinnamon(self, context):
+        err_msg = ""
+
+        # Make a directory for the context in case one does not yet exist
+        (stdout, stderr) = self.run_command("mkdir -p %s/%s" %
+                (self.config_dir, context))
+        if stderr != "":
+            err_msg = stderr
+
+        # Save the .cinnamon directory
+        (stdout, stderr) = self.run_command(
+                "cp -r %s/.cinnamon/configs/grouped-window-list@cinnamon.org/ %s/%s" %
+                    (os.path.expanduser("~/."), self.config_dir, context))
+        if stderr != "":
+            err_msg = "%s\n\n%s" % (err_msg, stderr)
+
+        # Save the background picture
+        (stdout, stderr) = self.run_command(
+                "gsettings get org.cinnamon.desktop.background picture-uri")
         if stderr != "":
             err_msg = "%s\n\n%s" % (err_msg, stderr)
         else:
