@@ -1,8 +1,7 @@
 # Gnome Context Switcher
 
-Gnome Context Switcher is an effective but poor excuse for KDE's Activities
-feature for Gnome. Changing contexts allows you to change desktop workflows
-without changing users.
+Gnome Context Switcher is similar to KDE's Activities feature. Changing
+contexts allows you to change desktop workflows without changing users.
 
 Unlike switching between multiple desktops, Gnome Context Switcher allows you
 to change Dock applications and have custom desktop backgrounds for each
