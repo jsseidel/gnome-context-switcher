@@ -98,6 +98,9 @@ function switch_context_macos () {
 	DTBAK=`cat $CSDIR/$1/desktopbackground`
 	osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$DTBAK\""
 	cp -f $CSDIR/$1/com.apple.dock.plist ~/Library/Preferences/com.apple.dock.plist
+  sleep 2
+	killall Dock
+  sleep 2
 	killall Dock
 		
 	echo "Switched to context '$1'"
