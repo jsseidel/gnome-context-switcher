@@ -97,9 +97,7 @@ function save_context_macos () {
 function switch_context_macos () {
 	DTBAK=`cat $CSDIR/$1/desktopbackground`
 	osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$DTBAK\""
-  # Hopefully this will take less time than restarting the dock. If not, we'll see the old dock still.
 	cp -f $CSDIR/$1/com.apple.dock.plist ~/Library/Preferences/com.apple.dock.plist
-  # Try again, just in case
 	killall Dock
 		
 	echo "Switched to context '$1'"
